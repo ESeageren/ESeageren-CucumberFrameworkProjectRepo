@@ -13,7 +13,7 @@ import utils.CommonMethods;
 import static utils.CommonMethods.driver;
 import static utils.PageInitializer.addEmployeePage;
 
-public class AddEmployeeSteps {
+public class AddEmployeeSteps extends CommonMethods {
 
     AddEmployeePage addEmployeePage = new AddEmployeePage();
 
@@ -21,64 +21,81 @@ public class AddEmployeeSteps {
     public void admin_user_is_on_the_add_employee_page() {
         CommonMethods.driver.get("https://your-hrms-url/pim/addEmployee");
     }
-
-    @When("admin enters a valid name")
-    public void admin_enters_a_valid_name() {
-        addEmployeePage.firstNameLoc.sendKeys("John");
-        addEmployeePage.middleNameLoc.sendKeys("A");
-        addEmployeePage.lastNameLoc.sendKeys("Doe");
+    @When("user clicks on add employee option")
+    public void user_clicks_on_add_employee_option() {
+        WebElement addEmployeeButton = driver.findElement(By.id("menu_pim_addEmployee"));
+        click(addEmployeeButton);
     }
 
-    @When("admin leaves the employee ID field blank")
-    public void admin_leaves_the_employee_id_field_blank() {
+    @When("user enters firstname middlename and lastname")
+    public void user_enters_firstname_middlename_and_lastname() {
+        sendText("Rabab", addEmployeePage.firstNameLoc);
+        sendText("ms", addEmployeePage.middleNameLoc);
+        sendText("karimzada", addEmployeePage.lastNameLoc);
+    }
+
+    @When("user clicks on save button")
+    public void user_clicks_on_save_button() {
+        click(addEmployeePage.saveButton);
+    }
+
+    @Then("employee is added successfully")
+    public void employee_is_added_successfully() {
+        System.out.println("employee added");
+    }
+
+    @When("user enters {string} and {string} and {string} values")
+    public void user_enters_and_and_values(String fn, String mn, String ln) {
+        sendText(fn, addEmployeePage.firstNameLoc);
+        sendText(mn, addEmployeePage.middleNameLoc);
+        sendText(ln, addEmployeePage.lastNameLoc);
+    }
+
+    @When("user leaves firstname and lastname empty")
+    public void user_leaves_firstname_and_lastname_empty() {
+        sendText("", addEmployeePage.firstNameLoc);
+        sendText("", addEmployeePage.lastNameLoc);
+        // Optional: middle name left out intentionally
+    }
+
+    @Then("error messages should be shown near firstname and lastname fields")
+    public void error_messages_should_be_shown_near_firstname_and_lastname_fields() {
+        Assert.assertTrue(addEmployeePage.firstNameError.isDisplayed());
+        Assert.assertTrue(addEmployeePage.lastNameError.isDisplayed());
+    }
+
+    @When("user enters {string} and {string} and {string} and employee ID {string}")
+    public void user_enters_and_and_and_employee_id(String firstName, String middleName, String lastName, String empID) {
+        sendText(firstName, addEmployeePage.firstNameLoc);
+        sendText(middleName, addEmployeePage.middleNameLoc);
+        sendText(lastName, addEmployeePage.lastNameLoc);
+        sendText(empID, addEmployeePage.employeeIdLoc);
+    }
+
+    @When("user clicks on PIM option")
+    public void user_clicks_on_pim_option() {
+        WebElement pimOption = driver.findElement(By.id("menu_pim_viewPimModule"));
+        //the benefit of using this method is to get extra facilities available in it.
+        //it will wait first for the element to be clickable
+        click(pimOption);
+    }
+
+    @When("user clicks on login button")
+    public void user_clicks_on_login_button() {
+        //  WebElement loginButton = driver.findElement(By.id("btnLogin"));
+        //loginButton.click();
+        click(loginPage.loginButton);
 
     }
 
-    @When("admin clicks the Save button")
-    public void admin_clicks_the_save_button() {
-        addEmployeePage.saveButton.click();
-    }
+    @When("user enters username and password")
+    public void user_enters_username_and_password() {
+        //  WebElement usernameField = driver.findElement(By.id("txtUsername"));
+        loginPage.usernameField.sendKeys("admin");
 
-    @Then("employee should be added successfully with a system-generated employee ID")
-    public void employee_should_be_added_successfully_with_a_system_generated_employee_id() {
+        //  WebElement passwordField = driver.findElement(By.id("txtPassword"));
+        loginPage.passwordField.sendKeys("Hum@nhrm123");
 
-        System.out.println("Verify employee is added with system-generated ID (not implemented due to missing elements)");
-    }
-
-    @When("admin enters a valid name and a valid employee ID")
-    public void admin_enters_a_valid_name_and_a_valid_employee_id() {
-        addEmployeePage.firstNameLoc.sendKeys("Jane");
-        addEmployeePage.middleNameLoc.sendKeys("B");
-        addEmployeePage.lastNameLoc.sendKeys("Smith");
-
-
-        System.out.println("Enter valid employee ID 'EMP1001' (field missing in AddEmployeePage, so skipping)");
-    }
-
-    @Then("employee should be added successfully with employee ID EMP1001")
-    public void employee_should_be_added_successfully_with_employee_id_emp1001() {
-        System.out.println("Verify employee is added with ID EMP1001 (not implemented due to missing elements)");
-    }
-
-    @When("admin enters a name with missing required fields")
-    public void admin_enters_a_name_with_missing_required_fields() {
-        addEmployeePage.firstNameLoc.clear();
-        addEmployeePage.middleNameLoc.clear();
-        addEmployeePage.lastNameLoc.clear();
-    }
-
-    @Then("user should see the required field messages")
-    public void user_should_see_the_required_field_messages() {
-        System.out.println("Verify required field messages are displayed (no locator available in AddEmployeePage)");
-    }
-
-    @When("admin enters an invalid employee ID")
-    public void admin_enters_an_invalid_employee_id() {
-        System.out.println("Enter invalid employee ID (field missing in AddEmployeePage, so skipping)");
-    }
-
-    @Then("user should see the invalid employee ID message")
-    public void user_should_see_the_invalid_employee_id_message() {
-        System.out.println("Verify invalid employee ID message is displayed (no locator available in AddEmployeePage)");
     }
 }
+

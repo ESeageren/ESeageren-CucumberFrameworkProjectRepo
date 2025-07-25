@@ -15,7 +15,6 @@
 
 Feature: Add employee scenarios
 
-
   Background:
      #Given user is navigated to HRMS application
     When user enters username and password
@@ -24,31 +23,32 @@ Feature: Add employee scenarios
     When user clicks on PIM option
     When user clicks on add employee option
 
-  @add
-  Scenario: Add employee without providing an employee ID
-    #Given admin user is on the Add Employee page
-    When admin enters a valid name
-    And admin leaves the employee ID field blank
-    And admin clicks the Save button
-    Then employee should be added successfully with a system-generated employee ID
+  @smoke @regression
+  Scenario: Adding one employee
+    And user enters firstname middlename and lastname
+    And user clicks on save button
+    Then employee is added successfully
 
-  @add
-  Scenario: Add employee by providing a unique employee ID
-    #Given admin user is on the Add Employee page
-    When admin enters a valid name and a valid employee ID
-    And admin clicks the Save button
-    Then employee should be added successfully with employee ID EMP1001
+  @datadriven @regression
+  Scenario Outline: adding multiple employees for data driven testing using examples table
+    And user enters "<firstName>" and "<middleName>" and "<lastName>" values
+    And user clicks on save button
+    Then employee is added successfully
+    Examples:
+      | firstName | middleName | lastName |
+      | nawab     | ms         | amin     |
+      | zafar     | ms         | dana     |
+      | latham    | ms         | izanica  |
 
-  @add
-  Scenario: Submit form with missing required fields
-    #Given admin user is on the Add Employee page
-    When admin enters a name with missing required fields
-    And admin clicks the Save button
-    Then user should see the required field messages
+  @negative @regression
+  Scenario: Adding employee with missing required fields
+    And user leaves firstname and lastname empty
+    And user clicks on save button
+    Then error messages should be shown near firstname and lastname fields
 
-  @add
-  Scenario: Submit form with invalid employee ID format
-    #Given admin user is on the Add Employee page
-    When admin enters an invalid employee ID
-    And admin clicks the Save button
-    Then user should see the invalid employee ID message
+  @customID @regression
+  Scenario: Adding employee with a provided employee ID
+    And user enters "Alice" and "B" and "Johnson" and employee ID "EMP2025"
+    And user clicks on save button
+    Then employee is added successfully
+

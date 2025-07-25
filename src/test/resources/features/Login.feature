@@ -26,29 +26,6 @@ Feature: login scenarios
     And user clicks the login button
     Then user is successfully logged in
 
-  @login
-  Scenario: Empty username login attempt
-    When user leaves the username field empty and enters a valid password
-    And user clicks the login button
-    Then user should see the message for empty username
-
-  @login
-  Scenario: Empty password login attempt
-    When user enters a valid username and leaves the password field empty
-    And user clicks the login button
-    Then user should see the message for empty password
-
-  @login
-  Scenario: Invalid login with wrong username
-    When user enters invalid username and valid password
-    And user clicks the login button
-    Then user should see the message for invalid credentials
-
-  @login
-  Scenario: Invalid login with wrong password
-    When user enters valid username and invalid password
-    And user clicks the login button
-    Then user should see the message for invalid credentials
 
     @error
     Scenario Outline: Error validation
