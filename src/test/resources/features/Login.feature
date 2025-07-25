@@ -17,36 +17,52 @@
 
 Feature: login scenarios
 
-  Scenario: valid admin login
-    #Given user is on the HRMS login page
-    When user enters username "Admin" and password "admin123"
-    And user clicks on login button
+  Background:
+    Given user is on the HRMS login page
+
+  @login
+  Scenario: Valid admin login
+    When user enters valid admin credentials
+    And user clicks the login button
     Then user is successfully logged in
 
-  Scenario: empty username login attempt
-      #Given user is on the HRMS login page
-    When user enters username "" and password "admin123"
+  @login
+  Scenario: Empty username login attempt
+    When user leaves the username field empty and enters a valid password
     And user clicks the login button
-    Then user should see the message "Username cannot be empty"
+    Then user should see the message for empty username
+
+  @login
+  Scenario: Empty password login attempt
+    When user enters a valid username and leaves the password field empty
+    And user clicks the login button
+    Then user should see the message for empty password
+
+  @login
+  Scenario: Invalid login with wrong username
+    When user enters invalid username and valid password
+    And user clicks the login button
+    Then user should see the message for invalid credentials
+
+  @login
+  Scenario: Invalid login with wrong password
+    When user enters valid username and invalid password
+    And user clicks the login button
+    Then user should see the message for invalid credentials
+
+    @error
+    Scenario Outline: Error validation
+      When user enters "<username>" and "<password>" in the field and verify "<errormessage>"
+      Examples:
+        | username | password | errormessage |
+        |admin     |          |Password is Empty|
+        |          |test      |Username cannot be empty|
+        |admin     |test      |Invalid credentials     |
+        |admin123  |Hrm123    |Invalid credentials    |
 
 
-  Scenario: empty password login attempt
-       #Given user is on the HRMS login page
-    When user enters username "Admin" and password ""
-    And user clicks the login button
-    Then user should see the message "Password cannot be empty"
 
-  Scenario: invalid login credentials wrong username
-         #Given user is on the HRMS login page
-    When user enters username "WrongUser" and password "admin123"
-    And user clicks the login button
-    Then user should see the message "Invalid credentials"
 
-  Scenario: invalid login credentials wrong password
-      #Given user is on the HRMS login page
-    When user enters username "Admin" and password "wrongpass"
-    And user clicks the login button
-    Then user should see the message "Invalid credentials"
 
 
 

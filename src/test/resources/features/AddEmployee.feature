@@ -13,32 +13,42 @@
 #incomplete or invalid employee information.
 # Error messages should be: - Clear - Easily visible - Placed near the respective input fields.
 
-Feature: add employee scenarios
+Feature: Add employee scenarios
 
+
+  Background:
+     #Given user is navigated to HRMS application
+    When user enters username and password
+    And user clicks on login button
+    Then user is successfully logged in
+    When user clicks on PIM option
+    When user clicks on add employee option
+
+  @add
   Scenario: Add employee without providing an employee ID
-    Given admin user is on the Add Employee page
-    When admin enters first name "John" and middle name "M" and last name "Doe"
+    #Given admin user is on the Add Employee page
+    When admin enters a valid name
     And admin leaves the employee ID field blank
     And admin clicks the Save button
     Then employee should be added successfully with a system-generated employee ID
 
+  @add
   Scenario: Add employee by providing a unique employee ID
-    Given admin user is on the Add Employee page
-    When admin enters first name "Alice" and middle name "" and last name "Smith"
-    And admin enters employee ID "EMP1001"
+    #Given admin user is on the Add Employee page
+    When admin enters a valid name and a valid employee ID
     And admin clicks the Save button
-    Then employee should be added successfully with employee ID "EMP1001"
+    Then employee should be added successfully with employee ID EMP1001
 
+  @add
   Scenario: Submit form with missing required fields
-    Given admin user is on the Add Employee page
-    When admin enters first name "" and middle name "" and last name ""
+    #Given admin user is on the Add Employee page
+    When admin enters a name with missing required fields
     And admin clicks the Save button
-    Then user should see the message "First Name is required"
-    And user should see the message "Last Name is required"
+    Then user should see the required field messages
 
+  @add
   Scenario: Submit form with invalid employee ID format
-    Given admin user is on the Add Employee page
-    When admin enters first name "Jane" and middle name "" and last name "Doe"
-    And admin enters employee ID "@@@123"
+    #Given admin user is on the Add Employee page
+    When admin enters an invalid employee ID
     And admin clicks the Save button
-    Then user should see the message "Invalid Employee ID format"
+    Then user should see the invalid employee ID message
