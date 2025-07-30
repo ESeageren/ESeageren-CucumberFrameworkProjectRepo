@@ -21,6 +21,9 @@ public class AddEmployeePage {
     public WebElement saveButton;
     public WebElement lastNameError;
     public WebElement firstNameError;
+    //public WebElement employeeIdLoc;
+
+    @FindBy(name = "employeeIdLoc")
     public WebElement employeeIdLoc;
 
 

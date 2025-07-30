@@ -23,7 +23,7 @@ Feature: Add employee scenarios
     When user clicks on PIM option
     When user clicks on add employee option
 
- @add
+  @add
   Scenario: Adding one employee
     And user enters firstname middlename and lastname
     And user clicks on save button
@@ -40,15 +40,17 @@ Feature: Add employee scenarios
       | zafar     | ms         | dana     |
       | latham    | ms         | izanica  |
 
-  @add @fail
+  @add @fail @empID
+  Scenario: Adding employee with a provided employee ID
+    And user enters "Alice" and "B" and "Johnson" and employee ID "4234639457"
+    And user clicks on save button
+    Then employee is added successfully
+
+  @add @fail @message
   Scenario: Adding employee with missing required fields
     And user leaves firstname and lastname empty
     And user clicks on save button
     Then error messages should be shown near firstname and lastname fields
 
-  @add @fail
-  Scenario: Adding employee with a provided employee ID
-    And user enters "Alice" and "B" and "Johnson" and employee ID "EMP2025"
-    And user clicks on save button
-    Then employee is added successfully
+
 

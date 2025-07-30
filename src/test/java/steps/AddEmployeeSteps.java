@@ -40,6 +40,7 @@ public class AddEmployeeSteps extends CommonMethods {
 
     @When("user clicks on save button")
     public void user_clicks_on_save_button() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         click(addEmployeePage.saveButton);
     }
 
@@ -64,16 +65,35 @@ public class AddEmployeeSteps extends CommonMethods {
 
     @Then("error messages should be shown near firstname and lastname fields")
     public void error_messages_should_be_shown_near_firstname_and_lastname_fields() {
-        Assert.assertTrue(addEmployeePage.firstNameError.isDisplayed());
-        Assert.assertTrue(addEmployeePage.lastNameError.isDisplayed());
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        System.out.println("1");
+        WebElement firstNameError = driver.findElement(By.xpath("(//span[@class='validation-error'])[1]"));
+        System.out.println("2");
+        WebElement lastNameError = driver.findElement(By.xpath("//span[@for='lastName']"));
+        System.out.println("3");
+        Assert.assertTrue(firstNameError.isDisplayed());
+        System.out.println("4");
+        Assert.assertTrue(lastNameError.isDisplayed());
+        System.out.println("5");
     }
 
     @When("user enters {string} and {string} and {string} and employee ID {string}")
     public void user_enters_and_and_and_employee_id(String firstName, String middleName, String lastName, String empID) {
         sendText(firstName, addEmployeePage.firstNameLoc);
+        System.out.println("line 1");
         sendText(middleName, addEmployeePage.middleNameLoc);
+        System.out.println("line 2");
         sendText(lastName, addEmployeePage.lastNameLoc);
-        sendText(empID, addEmployeePage.employeeIdLoc);
+        System.out.println("line 3");
+        //sendText(empID, addEmployeePage.employeeIdLoc);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        System.out.println("line 4");
+        WebElement employeeIdInput = driver.findElement(By.xpath("//input[@id='employeeId']"));
+        System.out.println("line 5");
+        employeeIdInput.clear();
+        System.out.println("line 6");
+        employeeIdInput.sendKeys(empID);
+        System.out.println("line 7");
     }
 
     @When("user clicks on PIM option")
