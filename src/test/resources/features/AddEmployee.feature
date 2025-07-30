@@ -23,13 +23,13 @@ Feature: Add employee scenarios
     When user clicks on PIM option
     When user clicks on add employee option
 
-  @smoke @regression
+ @add
   Scenario: Adding one employee
     And user enters firstname middlename and lastname
     And user clicks on save button
     Then employee is added successfully
 
-  @datadriven @regression
+  @add
   Scenario Outline: adding multiple employees for data driven testing using examples table
     And user enters "<firstName>" and "<middleName>" and "<lastName>" values
     And user clicks on save button
@@ -40,13 +40,13 @@ Feature: Add employee scenarios
       | zafar     | ms         | dana     |
       | latham    | ms         | izanica  |
 
-  @negative @regression
+  @add @fail
   Scenario: Adding employee with missing required fields
     And user leaves firstname and lastname empty
     And user clicks on save button
     Then error messages should be shown near firstname and lastname fields
 
-  @customID @regression
+  @add @fail
   Scenario: Adding employee with a provided employee ID
     And user enters "Alice" and "B" and "Johnson" and employee ID "EMP2025"
     And user clicks on save button

@@ -7,8 +7,11 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.AddEmployeePage;
 import utils.CommonMethods;
+
+import java.time.Duration;
 
 import static utils.CommonMethods.driver;
 import static utils.PageInitializer.addEmployeePage;
@@ -24,6 +27,7 @@ public class AddEmployeeSteps extends CommonMethods {
     @When("user clicks on add employee option")
     public void user_clicks_on_add_employee_option() {
         WebElement addEmployeeButton = driver.findElement(By.id("menu_pim_addEmployee"));
+        waitForElementToBeClickAble(addEmployeeButton);
         click(addEmployeeButton);
     }
 
@@ -90,10 +94,10 @@ public class AddEmployeeSteps extends CommonMethods {
 
     @When("user enters username and password")
     public void user_enters_username_and_password() {
-        //  WebElement usernameField = driver.findElement(By.id("txtUsername"));
+          //WebElement usernameField = driver.findElement(By.id("txtUsername"));
         loginPage.usernameField.sendKeys("admin");
 
-        //  WebElement passwordField = driver.findElement(By.id("txtPassword"));
+         //WebElement passwordField = driver.findElement(By.id("txtPassword"));
         loginPage.passwordField.sendKeys("Hum@nhrm123");
 
     }
