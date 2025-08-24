@@ -36,6 +36,10 @@ import java.util.Date;
                 case "FireFox":
                     FirefoxOptions options = new FirefoxOptions();
                     options.setHeadless(true); // enable headless mode
+                    //testing the following two lines to run with Jenkins
+                    options.addArguments("--disable-gpu"); // Optional: improve stability
+                    options.addArguments("--window-size=1920,1080"); // Optional: ensure consistent layout
+
                     driver = new FirefoxDriver(options);
                     break;
                     //  driver=new FirefoxDriver();
