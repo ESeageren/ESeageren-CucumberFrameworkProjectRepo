@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.v85.page.Page;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -33,8 +34,12 @@ import java.util.Date;
                     driver=new ChromeDriver();
                     break;
                 case "FireFox":
-                    driver=new FirefoxDriver();
+                    FirefoxOptions options = new FirefoxOptions();
+                    options.setHeadless(true); // enable headless mode
+                    driver = new FirefoxDriver(options);
                     break;
+                    //  driver=new FirefoxDriver();
+                   // break;
                 case "Edge":
                     driver = new EdgeDriver();
                     break;
